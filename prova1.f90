@@ -1,9 +1,11 @@
 module funzioni
 implicit none
+integer,parameter :: rk=selected_real_kind(15)
+
 contains
 function vx(x,y) result(res)
-	real,intent(in) :: x,y
-	real :: res
+	real(rk),intent(in) :: x,y
+	real(rk) :: res
 	if(x*y<=0) then
 		res=1
 	elseif (abs(y)<=abs(x**3)) then
@@ -14,8 +16,8 @@ function vx(x,y) result(res)
 end function
 
 function vy(x,y) result(res)
-	real,intent(in) :: x,y
-	real :: res
+	real(rk),intent(in) :: x,y
+	real(rk) :: res
 	if(x*y<=0) then
 		res=0
 	else if (abs(y)<=abs(x**3)) then
@@ -30,7 +32,7 @@ end module funzioni
 program aaaa
 use funzioni
 implicit none
-real :: x,y,dx=0.1,dy=0.1,v_x,v_y
+real(rk) :: x,y,dx=0.05_rk,dy=0.05_rk,v_x,v_y
 integer :: i,j
 do i=-100,100
 	do j=-100,100
@@ -38,7 +40,7 @@ do i=-100,100
 		y=j*dy
 		v_x=vx(x,y)
 		v_y=vy(x,y)
-		write(1,*) x, y, v_x*dx, v_y*dx, v_x**2+v_y**2
+		write(1,*) x, y, v_x*dx, v_y*dy, v_x**2+v_y**2
 	end do
 end do
 
